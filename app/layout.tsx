@@ -1,13 +1,14 @@
 import type { Metadata } from "next";
-import {
-  ClerkProvider,
-  Show,
-  SignInButton,
-  SignUpButton,
-  UserButton,
-} from "@clerk/nextjs";
+// import {
+//   ClerkProvider,
+//   Show,
+//   SignInButton,
+//   SignUpButton,
+//   UserButton,
+// } from "@clerk/nextjs";
 import { IBM_Plex_Serif, Mona_Sans } from "next/font/google";
 import "./globals.css";
+import Navbar from "@/components/Navbar";
 
 const ibmPlexSerif = IBM_Plex_Serif({
   variable: "--font-geist-sans",
@@ -38,7 +39,8 @@ export default function RootLayout({
       <body
         className={`${ibmPlexSerif.variable} ${monaSans.variable} relative font-sans antialiased`}
       >
-        <ClerkProvider>
+        <Navbar />
+        {/* <ClerkProvider>
           <header className="flex justify-end items-center p-4 gap-4 h-16">
             <Show when="signed-out">
               <SignInButton />
@@ -53,7 +55,8 @@ export default function RootLayout({
             </Show>
           </header>
           {children}
-        </ClerkProvider>
+        </ClerkProvider> */}
+        {children}
       </body>
     </html>
   );
