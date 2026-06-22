@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
-// import {
-//   ClerkProvider,
-//   Show,
-//   SignInButton,
-//   SignUpButton,
-//   UserButton,
-// } from "@clerk/nextjs";
+import {
+  ClerkProvider,
+  // Show,
+  // SignInButton,
+  // SignUpButton,
+  // UserButton,
+} from "@clerk/nextjs";
 import { IBM_Plex_Serif, Mona_Sans } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
@@ -39,7 +39,6 @@ export default function RootLayout({
       <body
         className={`${ibmPlexSerif.variable} ${monaSans.variable} relative font-sans antialiased`}
       >
-        <Navbar />
         {/* <ClerkProvider>
           <header className="flex justify-end items-center p-4 gap-4 h-16">
             <Show when="signed-out">
@@ -54,9 +53,14 @@ export default function RootLayout({
               <UserButton />
             </Show>
           </header>
+          <Navbar />
           {children}
-        </ClerkProvider> */}
-        {children}
+        </ClerkProvider>
+        {children} */}
+        <ClerkProvider>
+          <Navbar />
+          {children}
+        </ClerkProvider>
       </body>
     </html>
   );
