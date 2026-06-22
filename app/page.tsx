@@ -5,10 +5,10 @@ import React from "react";
 
 const page = () => {
   return (
-    <div>
+    <main className="wrapper container">
       <HeroSection />
 
-      <div className="library-hero-grid">
+      <div className="library-books-grid">
         {sampleBooks.map((book) => (
           <BookCard
             key={book._id}
@@ -19,7 +19,7 @@ const page = () => {
           />
         ))}
       </div>
-    </div>
+    </main>
   );
 };
 
