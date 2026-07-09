@@ -1,0 +1,54 @@
+import mongoose, { Schema, model, models, Types, Document } from "mongoose";
+
+export interface IVoiceSession extends Document {
+  _id: string;
+  clerkId: string;
+  bookId: Types.ObjectId;
+  startedAt: Date;
+  endedAt?: Date;
+  durationSeconds: number;
+  billingPeriodStart: Date;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+const VoiceSessionSchema = new Schema<IVoiceSession>(
+  {
+    clerkId: {
+      type: String,
+      required: true,
+      index: true,
+    },
+    bookId: {
+      type: Schema.Types.ObjectId,
+      ref: "Book",
+      required: true,
+      index: true,
+    },
+    startedAt: {
+      type: Date,
+      required: true,
+    },
+    endedAt: {
+      type: Date,
+    },
+    durationSeconds: {
+      type: Number,
+      required: true,
+      default: 0,
+    },
+    billingPeriodStart: {
+      type: Date,
+      required: true,
+      index: true,
+    },
+  },
+  { timestamps: true }
+);
+
+// Useful for billing/usage queries: sessions per user within a billing period
+VoiceSessionSchema.index({ clerkId: 1, billingPeriodStart: 1 });
+
+export const VoiceSession =
+  models.VoiceSession ||
+  model<IVoiceSession>("VoiceSession", VoiceSessionSchema);
