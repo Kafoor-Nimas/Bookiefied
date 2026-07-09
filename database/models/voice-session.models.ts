@@ -1,16 +1,5 @@
-import mongoose, { Schema, model, models, Types, Document } from "mongoose";
-
-export interface IVoiceSession extends Document {
-  _id: string;
-  clerkId: string;
-  bookId: Types.ObjectId;
-  startedAt: Date;
-  endedAt?: Date;
-  durationSeconds: number;
-  billingPeriodStart: Date;
-  createdAt: Date;
-  updatedAt: Date;
-}
+import { IVoiceSession } from "@/type";
+import { Schema, model, models } from "mongoose";
 
 const VoiceSessionSchema = new Schema<IVoiceSession>(
   {
@@ -23,11 +12,11 @@ const VoiceSessionSchema = new Schema<IVoiceSession>(
       type: Schema.Types.ObjectId,
       ref: "Book",
       required: true,
-      index: true,
     },
     startedAt: {
       type: Date,
       required: true,
+      default: Date.now,
     },
     endedAt: {
       type: Date,
@@ -43,7 +32,7 @@ const VoiceSessionSchema = new Schema<IVoiceSession>(
       index: true,
     },
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
 // Useful for billing/usage queries: sessions per user within a billing period
@@ -52,3 +41,5 @@ VoiceSessionSchema.index({ clerkId: 1, billingPeriodStart: 1 });
 export const VoiceSession =
   models.VoiceSession ||
   model<IVoiceSession>("VoiceSession", VoiceSessionSchema);
+
+export default VoiceSession;
