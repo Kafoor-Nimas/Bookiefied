@@ -4,6 +4,7 @@ import { useState, useRef } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
+import { useAuth } from "@clerk/nextjs";
 
 // ─── Validation Schema ────────────────────────────────────────────────────────
 const formSchema = z.object({
@@ -191,13 +192,15 @@ const ImageIcon = () => (
 // ─── Main Form ────────────────────────────────────────────────────────────────
 export default function UploadForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isMounted,setIsMounted] = useState(false);
+  const {userId}=useAuth();
 
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: { title: "", author: "", voice: "rachel" },
   });
 
-  const onSubmit = async (values: FormValues) => {
+  const onSubmit = async (values: BookUploadFormValues) => {
     setIsSubmitting(true);
     try {
       console.log("Submitting:", values);

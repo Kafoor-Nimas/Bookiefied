@@ -1,3 +1,5 @@
+"use server"
+
 import { connectToDatabase } from "@/database/mongoose";
 import { CreateBook, TextSegment } from "@/type";
 import { generateSlug, serializeData } from "../utils";
